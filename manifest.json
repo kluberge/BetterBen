@@ -1,6 +1,6 @@
 ﻿{
 	"name": "BetterBensRaincoat",
-	"version_number": "1.1.0",
+	"version_number": "1.1.1",
 	"website_url": "https://github.com/kluberge/BetterBen",
 	"description": "Reverts Ben's Raincoat to pre-patch status and buffs it",
 	"dependencies": [

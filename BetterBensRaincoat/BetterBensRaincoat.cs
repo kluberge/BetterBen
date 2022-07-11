@@ -33,7 +33,7 @@ namespace BetterBensRaincoat
         public const string PluginGUID = PluginAuthor + "." + PluginName;
         public const string PluginAuthor = "PhysicsFox";
         public const string PluginName = "BetterBensRaincoat";
-        public const string PluginVersion = "1.1.0";
+        public const string PluginVersion = "1.1.1";
 
         private static ConfigFile config;
         private static ConfigEntry<float> configBarrierValue;
@@ -48,16 +48,23 @@ namespace BetterBensRaincoat
 
             On.RoR2.Items.ImmuneToDebuffBehavior.OverrideDebuff_BuffDef_CharacterBody += (orig, buffDef, body) =>
             {
+                if (!body.teamComponent || body.teamComponent.teamIndex != TeamIndex.Player)
+                    return orig(buffDef, body);
+                
                 return buffDef.buffIndex != BuffIndex.None && buffDef.isDebuff && TryApplyOverride(body);
             };
             
             On.RoR2.Items.ImmuneToDebuffBehavior.OverrideDot += (orig, inflictDotInfo) =>
             {
                 GameObject victimObject = inflictDotInfo.victimObject;
-                CharacterBody characterBody = (victimObject != null) ? victimObject.GetComponent<RoR2.CharacterBody>() : null;
-                return characterBody && TryApplyOverride(characterBody);
+                CharacterBody body = (victimObject != null) ? victimObject.GetComponent<CharacterBody>() : null;
+                
+                if (body != null && (!body.teamComponent || body.teamComponent.teamIndex != TeamIndex.Player))
+                    return orig(inflictDotInfo);
+                
+                return body && TryApplyOverride(body);
             };
-
+            
             // Update description to match functionality
             var pickupToken = "ITEM_IMMUNETODEBUFF_PICKUP";
             var descToken = "ITEM_IMMUNETODEBUFF_DESC";

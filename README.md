@@ -25,6 +25,8 @@ This essentially just takes the pre-patch raincoat and buffs it so that it scale
 To report an issue, feel free to ping me on Discord @physicsfox#7810 
 
 ## Changelog
+**1.1.1**
+* Nerfed mithrix and scavengers picking up the item and being basically unkillable
 
 **1.1.0**
 * Buffed configurability, including photosensitivity option that disables VFX
